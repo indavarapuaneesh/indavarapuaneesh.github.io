@@ -3,6 +3,7 @@ layout: post
 title:  "DP is fun when derived from Recursive"
 date:   2021-07-09 20:01:04 +0530
 categories: DP 
+author: Aneesh
 ---
 Dynamic programming is fun when you know the recursive solution to the problem
 
