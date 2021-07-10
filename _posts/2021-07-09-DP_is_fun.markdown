@@ -1,0 +1,53 @@
+---
+layout: post
+title:  "DP is fun when derived from Recursive"
+date:   2021-07-09 20:01:04 +0530
+categories: DP 
+---
+Dynamic programming is fun when you know the recursive solution to the problem
+
+Question : [Max Dot Product of Two Subsequences](https://leetcode.com/problems/max-dot-product-of-two-subsequences/)
+
+### Recursive solution 
+{% highlight ruby %}
+
+def dot_product(nums1, nums2, i, j)
+    
+    if i == nums1.length() or j == nums2.length()
+        return 0
+    
+    else
+        include_nums_1_2 = nums1[i]*nums2[j]+dot_product(nums1, nums2, i+1, j+1)
+        exclude_nums2 = dot_product(nums1,nums2, i, j+1)
+        exclude_nums1 = dot_product(nums1, nums2, i+1, j)
+        return [include_nums_1_2, exclude_nums2, exclude_nums1].max
+    end 
+end 
+        
+{% endhighlight %}
+
+### DP soluiton 
+{% highlight ruby %}
+
+def dot_product(nums1, nums2)
+    
+    # return dot_product(nums1, nums2, 0, 0)
+    n1 = nums1.length()
+    n2 = nums2.length()
+    dp = Array.new(n1+1) {Array.new(n2+1, 0)}
+    for i in 1..n1 do
+        for j in 1..n2 do
+            include_nums_1_2 = nums1[i-1]*nums2[j-1] + dp[i-1][j-1]
+            exclude_nums2 = dp[i][j-1]
+            exclude_nums1 = dp[i-1][j]
+            dp[i][j] = [include_nums_1_2, exclude_nums2, exclude_nums1].max
+        end
+    end 
+    return dp[n1][n2] != 0 ? dp[n1][n2] : [nums1.min*nums2.max, nums1.max*nums2.min].max
+    
+end
+{% endhighlight %}
+
+As we can see that both approaches have same skeletal but this may not be the case for all the problems. 
+
+Although DP may not have real world use cases but writing recursive solutions are fun. 
